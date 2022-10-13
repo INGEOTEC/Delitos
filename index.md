@@ -77,11 +77,10 @@ segundo no hay información para suponer que el evento fue accidental.
     atropellado por un camión, esto en Avenida El Rosario casi con calle Cultura 
     Norte Colonia El Rosario Alcaldía de Azcapotzalco. 
 
-Cada tuit fue etiquetado por tres personas siguiente las reglas mencionadas 
-anteriormente.
 
-Cuando se tuvieron etiquetados un par de decenas de la clase positiva, se entrenó un 
-clasificador donde el texto era representado en un espacio de emoticones 
+El proceso de etiquetado se realizó en dos etapas, en la primera etapa se creo un modelo
+cuando se tuvo etiquetados un par de decenas de la clase positiva; el  
+clasificador representaba el texto en un espacio de emoticones 
 (ver [EvoMSA](http://evomsa.readthedocs.io)) y el clasificador era un máquina de soporte 
 vectorial lineal. Al azar se seleccionaban todos los tuits recolectados en un hora 
 particular, de esos tuits se seleccionaban 2048 tuits, etiquetando los 8 tuits con el 
@@ -91,6 +90,9 @@ tuit ya etiquetado. Finalmente, el modelo se actualizaban de manera automática 
 seleccionaba otra hora. El proceso mencionado anteriormente se realizó hasta tener 
 etiquetados 500 tuits con la clase positiva y se obtuvieron 1,500 tuits de la clase 
 negativa.
+
+Este conjunto se etiquetó por tres personas siguiente las reglas mencionadas 
+anteriormente.
 
 <!--
 ¿Cuál es el delito?
