@@ -12,18 +12,27 @@ permalink: /
 
 Este repositorio contiene el corpus de **Delitos** generado por el grupo
 de investigación [ingeotec](https://github.com/INGEOTEC). 
-Este corpus contiene 1,300 tweets negativos (*label* 0) y 500 tweets positivos (*label* 1)
+Este corpus contiene 1,351 tuits negativos (*label* 0) y 449 tuits positivos (*label* 1)
 
-El proceso que se siguió fue primeramente buscar mensajes que tuvieran las palabras 
-*robar*, *asaltar*, *quitar*, *secuestrar* y *asesinar* o q-gramas de estas palabras. 
-Se creó una bolsa de palabras y q-gramas y se seleccionó, con las similitud coseno, los 
-tuits más similares a la consulta creada con las palabras en días seleccionados al azar. 
-Se recuperaban los 8 tuits más similares por día y se etiquetaron como positivos aquellos 
-que mencionan algún delito y negativo aquellos que no tenían mención de delitos. 
+El corpus está dividido en un conjunto de entrenamiento [delitos_train.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json) y un conjunto de
+prueba [delitos_test.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json).
 
-Se etiquetó un tuit como positivo cuando se puede contestar la pregunta:
-**¿Cuál es el delito?** y además que el mensaje sea **un hecho**, 
-que el **objetivo del mensaje sea sobre el delito**, es decir, que no sea una opinión
+El formato de estos dos archivos es un json por linea, el json tiene tres llaves;
+*annotations* que continen la lista de etiquetas asignadas por tres personas, 
+*id* es el identificador del tuit y *label* que es la clase asignada. El siguiente
+código muestra un tuit etiquetado.
+
+```json
+{'annotations': [0, 0, 0], 'id': 1152148249157021698, 'label': 0}
+```
+
+# Etiquetado
+
+El procedimiento que se siguió para etiquetar un tuit como positivo o negativo 
+fue el siguiente.  Un tuit se identificó comoo positivo cuando se 
+puede contestar la pregunta: **¿Cuál es el delito?** y además se debe 
+cumplir que el mensaje sea **un hecho**, que el 
+**objetivo, del mensaje, sea sobre el delito**, es decir, que no sea una opinión
 y que **no se trate de un accidente.**
 
 Con el propósito de clarificar estas reglas se presentan algunos mensajes controversiales. 
@@ -42,7 +51,7 @@ delito por ese motivo se marca como negativo.
 
     - Amenazas a la fiscal Ximena Chong : Hagamos memoria - Estallido Social en Chile
 
-En los siguientes ejemplos se infiere por el contexto que el delito es el 
+En los siguientes tuits se infiere por el contexto que el delito es el 
 tráfico de personas y conducción en estado de ebriedad dado que se está 
 usando una patera y se menciona un chofer
 
@@ -51,7 +60,7 @@ usando una patera y se menciona un chofer
     - Chofer de autobús escolar ebria es detenida por estudiantes valientes
 
 
-En los siguientes ejemplos se identifica el delito, pero el objetivo del 
+En los siguientes mensajes se identifica el delito, pero el objetivo del 
 mensaje es comunicar otro evento que no es un delito. 
 
     - La Policía Nacional homenajea a cuatro agentes asesinados en octubre
@@ -77,10 +86,26 @@ segundo no hay información para suponer que el evento fue accidental.
     atropellado por un camión, esto en Avenida El Rosario casi con calle Cultura 
     Norte Colonia El Rosario Alcaldía de Azcapotzalco. 
 
+# Procedimiento
 
-El proceso de etiquetado se realizó en dos etapas, en la primera etapa se creo un modelo
-cuando se tuvo etiquetados un par de decenas de la clase positiva; el  
-clasificador representaba el texto en un espacio de emoticones 
+El proceso que se siguió estuvo divido en tres etapas, en las primeras dos etapas
+solo se involucró una persona y en la última etapa se involucrarón tres personas.
+
+## Primera etapa
+
+La primera etapa consistió en buscar mensajes que tuvieran las palabras 
+*robar*, *asaltar*, *quitar*, *secuestrar* y *asesinar* o q-gramas de estas palabras. 
+Se creó una bolsa de palabras y q-gramas y se seleccionó, con las similitud coseno, los 
+tuits más similares a la consulta creada con las palabras en días seleccionados al azar. 
+Se recuperaban los 8 tuits más similares por día y se etiquetaron como positivos aquellos 
+que mencionan algún delito y negativo aquellos que no tenían mención de delitos, 
+siguiendo las reglas mencionadas anteriormente. 
+
+## Segunda etapa
+
+Cuando en la primera etapa se tuvieron etiquetados un par de decenas 
+de la clase positiva, se inició con la segunda etapa. En esta etapa se 
+entrenó un clasificador donde el texto era representado en un espacio de emoticones 
 (ver [EvoMSA](http://evomsa.readthedocs.io)) y el clasificador era un máquina de soporte 
 vectorial lineal. Al azar se seleccionaban todos los tuits recolectados en un hora 
 particular, de esos tuits se seleccionaban 2048 tuits, etiquetando los 8 tuits con el 
@@ -91,12 +116,8 @@ seleccionaba otra hora. El proceso mencionado anteriormente se realizó hasta te
 etiquetados 500 tuits con la clase positiva y se obtuvieron 1,500 tuits de la clase 
 negativa.
 
-Este conjunto se etiquetó por tres personas siguiente las reglas mencionadas 
-anteriormente.
+## Tercera etapa 
 
-<!--
-¿Cuál es el delito?
--->
-
-El corpus está dividido en un conjunto de entrenamiento [delitos_train.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json) y un conjunto de
-prueba [delitos_test.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json).
+En la tercera etapa se etiquetó el conjunto de 1,800 tuits por tres personas 
+siguiendo las reglas mencionadas anteriormente. El conjunto etiquetado es
+el que se encuentra en los archivos [delitos_train.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json) y [delitos_test.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json).
