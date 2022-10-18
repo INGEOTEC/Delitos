@@ -113,14 +113,11 @@ hy = bow.predict(Dtest)
 Con las predicciones se puede calcular el rendimiento de
 del algoritmo, la siguiente tabla muestra la medida *f1*, el *recall* y 
 la *precision*, todas estas calculadas con la librería `sklearn`.
-La tabla también incluye la error estandar, calculado mediante bootstraping;
-y el primer valor de cada medida corresponde a la media obtenida también 
-en el bootstrap. 
-
+La tabla también incluye la error estandar, calculado mediante bootstraping.
 
 | f1 | recall | precision |
 |----|--------|-----------|
-|$0.7713 \pm 0.0396$| $0.6703 \pm 0.0527$| $0.9116 \pm 0.0383$|
+|$0.7727 \pm 0.0418$| $0.6711 \pm 0.0572$| $0.9107 \pm 0.0384$|
 
 El siguiente código se utilizó para medir el rendimiento. 
 ```python
@@ -129,13 +126,30 @@ import numpy as np
 
 y = np.array([x['label'] for x in Dtest])
 
+funcs =  [f1_score, recall_score, precision_score]
 B = []
 for _ in range(500):
     s = np.random.randint(y.shape[0], size=y.shape[0])
-    _ = [func(y[s], hy[s]) for func in [f1_score, recall_score precision_score]]
+    _ = [func(y[s], hy[s]) for func in funcs]
     B.append(_)
 B = np.array(B)
 
-media = B.mean(axis=0)
+medida = [func(y, hy) for func in funcs]
 error_estandar = B.std(axis=0)
 ``` 
+
+# Etiquetadores
+
+Siguiendo el mismo procedimiento utilizado para medir el algoritmo
+desarrollado se puede medir la etiqueta de cada anotador, es decir,
+la clase verdadera es el conceso y se toma cada las etiquetas individuales
+como predicciones. 
+
+Se cuenta con tres anotaciones por cada tuit, entonces el rendimiento
+de estos etiquetadores se muetra en la siguiente tabla. 
+
+| f1 | recall | precision |
+|----|--------|-----------|
+|$0.9737 \pm 0.0128$| $0.9737 \pm 0.0180$| $0.9737 \pm 0.0171$|
+|$0.9157 \pm 0.0208$| $1.0000 \pm 0.0000$| $0.8444 \pm 0.0352$|
+|$0.9660 \pm 0.0165$| $0.9342 \pm 0.0305$| $1.0000 \pm 0.0000$|
