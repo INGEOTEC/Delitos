@@ -142,11 +142,11 @@ error_estandar = B.std(axis=0)
 
 Siguiendo el mismo procedimiento utilizado para medir el algoritmo
 desarrollado se puede medir la etiqueta de cada anotador, es decir,
-la clase verdadera es el conceso y se toma cada las etiquetas individuales
+la clase verdadera es el consenso y se toma cada una de las etiquetas individuales
 como predicciones. 
 
-Se cuenta con tres anotaciones por cada tuit, entonces el rendimiento
-de estos etiquetadores se muetra en la siguiente tabla. 
+Se tienen tres anotaciones por cada tuit, entonces el rendimiento
+de estos etiquetadores se muestra en la siguiente tabla. 
 
 | f1 | recall | precision |
 |----|--------|-----------|
