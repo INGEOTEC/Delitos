@@ -117,7 +117,7 @@ La tabla también incluye la error estandar, calculado mediante bootstraping.
 
 | f1 | recall | precision |
 |----|--------|-----------|
-|$0.7727 \pm 0.0418$| $0.6711 \pm 0.0572$| $0.9107 \pm 0.0384$|
+|$$0.7727 \pm 0.0418$$| $$0.6711 \pm 0.0572$$| $$0.9107 \pm 0.0384$$|
 
 El siguiente código se utilizó para medir el rendimiento. 
 ```python
@@ -150,6 +150,6 @@ de estos etiquetadores se muetra en la siguiente tabla.
 
 | f1 | recall | precision |
 |----|--------|-----------|
-|$0.9737 \pm 0.0128$| $0.9737 \pm 0.0180$| $0.9737 \pm 0.0171$|
-|$0.9157 \pm 0.0208$| $1.0000 \pm 0.0000$| $0.8444 \pm 0.0352$|
-|$0.9660 \pm 0.0165$| $0.9342 \pm 0.0305$| $1.0000 \pm 0.0000$|
+|$$0.9737 \pm 0.0128$$| $$0.9737 \pm 0.0180$$| $$0.9737 \pm 0.0171$$|
+|$$0.9157 \pm 0.0208$$| $$1.0000 \pm 0.0000$$| $$0.8444 \pm 0.0352$$|
+|$$0.9660 \pm 0.0165$$| $$0.9342 \pm 0.0305$$| $$1.0000 \pm 0.0000$$|
