@@ -80,7 +80,7 @@ from EvoMSA.utils import load_dataset
 m = load_dataset(lang='es', name='delitos_ingeotec', k=1)
 ```
 
-# Performance
+# Rendimiento
 
 El conjunto de datos está divido en dos partes un conjunto de entrenamiento
 y otro de prueba. Con el conjunto de entrenamiento se entrenó una máquina
