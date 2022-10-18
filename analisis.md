@@ -80,3 +80,62 @@ from EvoMSA.utils import load_dataset
 m = load_dataset(lang='es', name='delitos_ingeotec', k=1)
 ```
 
+# Performance
+
+El conjunto de datos está divido en dos partes un conjunto de entrenamiento
+y otro de prueba. Con el conjunto de entrenamiento se entrenó una máquina
+de soporte vectorial lineal y en esta sección se presentan algunas medidas
+de rendimiento de este algoritmo medido en el conjunto de prueba. 
+
+El proceso para entrenar el modelo fue utilizado para crear la bolsa de
+palabras mostradas en la sección anterior. El siguiente código 
+se puede utilizar para usar el modelo y predecir los datos 
+del conjunto de prueba. 
+
+```python
+from EvoMSA.evodag import BoW
+from EvoMSA.utils import load_dataset
+
+bow = BoW(lang='es')
+bow.estimator_instance = load_dataset(lang='es', name='delitos_ingeotec', k=1)
+```
+
+Suponiendo que el conjunto de prueba tiene el campo `text` que contiene
+el texto del tuit entonces se puede predecir la clase de la siguiente manera.
+
+```python
+from microtc.utils import tweet_iterator
+
+Dtest = list(tweet_iterator('delitos_test.json'))
+hy = bow.predict(Dtest)
+```
+
+Con las predicciones se puede calcular el rendimiento de
+del algoritmo, la siguiente tabla muestra la medida *f1*, el *recall* y 
+la *precision*, todas estas calculadas con la librería `sklearn`.
+La tabla también incluye la error estandar, calculado mediante bootstraping;
+y el primer valor de cada medida corresponde a la media obtenida también 
+en el bootstrap. 
+
+
+| f1 | recall | precision |
+|----|--------|-----------|
+|$0.7713 \pm 0.0396$| $0.6703 \pm 0.0527$| $0.9116 \pm 0.0383$|
+
+El siguiente código se utilizó para medir el rendimiento. 
+```python
+from sklearn.metrics import f1_score, recall_score, precision_score
+import numpy as np
+
+y = np.array([x['label'] for x in Dtest])
+
+B = []
+for _ in range(500):
+    s = np.random.randint(y.shape[0], size=y.shape[0])
+    _ = [func(y[s], hy[s]) for func in [f1_score, recall_score precision_score]]
+    B.append(_)
+B = np.array(B)
+
+media = B.mean(axis=0)
+error_estandar = B.std(axis=0)
+``` 

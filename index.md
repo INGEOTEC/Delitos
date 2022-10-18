@@ -29,7 +29,7 @@ código muestra un tuit etiquetado.
 # Etiquetado
 
 El procedimiento que se siguió para etiquetar un tuit como positivo o negativo 
-fue el siguiente.  Un tuit se identificó comoo positivo cuando se 
+fue el siguiente.  Un tuit se identificó como positivo cuando se 
 puede contestar la pregunta: **¿Cuál es el delito?** y además se debe 
 cumplir que el mensaje sea **un hecho**, que el 
 **objetivo, del mensaje, sea sobre el delito**, es decir, que no sea una opinión
