@@ -20,15 +20,12 @@ una máquina de soporte vectorial lineal usando una bolsa de palabras previament
 calculada.
 
 ```python
+from EvoMSA.evodag import BoW
 from microtc.utils import tweet_iterator
-from EvoMSA.utils import load_bow
-from sklearn.svm import LinearSVC
 
 D = list(tweet_iterator('delitos_train.json'))
-bow = load_bow(lang='es')
-X = bow.transform([x['text'] for x in D])
-m = LinearSVC().fit(X, [x['label'] for x in D])
-w = m.coef_[0]
+bow = BoW(lang='es').fit(D)
+w = bow.estimator_instance.coef_[0]
 ```
 
 Para sacar la bolsa de palabras se toma en cuenta el peso que tiene la palabra
@@ -38,7 +35,7 @@ un peso positivo y se calcula el producto con el coeficiente obtenido
 en el clasificador. 
 
 ```python 
-tokens = {bow.id2token[id]: _w * w[id] for id, _w in bow.token_weight.items() if w[id] > 0}
+tokens = {bow.bow.id2token[id]: _w * w[id] for id, _w in bow.bow.token_weight.items() if w[id] > 0}
 ```
 
 La variable `tokens` tiene el peso de cada token para la clasificación, en el siguiente
@@ -77,7 +74,7 @@ obtener con el siguiente código.
 
 ```python
 from EvoMSA.utils import load_dataset
-m = load_dataset(lang='es', name='delitos_ingeotec', k=1)
+m = load_dataset(lang='es', name='delitos_ingeotec')[0]
 ```
 
 # Rendimiento
@@ -97,7 +94,7 @@ from EvoMSA.evodag import BoW
 from EvoMSA.utils import load_dataset
 
 bow = BoW(lang='es')
-bow.estimator_instance = load_dataset(lang='es', name='delitos_ingeotec', k=1)
+bow.estimator_instance = load_dataset(lang='es', name='delitos_ingeotec')[0]
 ```
 
 Suponiendo que el conjunto de prueba tiene el campo `text` que contiene
