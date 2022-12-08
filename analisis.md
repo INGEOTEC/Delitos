@@ -9,18 +9,26 @@ nav_order: 2
 
 ---
 
-Para dar una idea de el conjunto de datos etiquetado, la siguiente figura presenta dos 
-nubes. La primera corresponde a las palabras mas significativas para seleccionar la clase 
-positiva y la segunda nube contienen los q-gramas más significativos. Estos tokens fueron 
-seleccionados de acuerdo al coeficiente calculado por la máquina de soporte vectorial 
+Para dar una idea de el conjunto de datos etiquetado, 
+la siguientes dos figuras presentan dos nubes. 
+La primera corresponde a las palabras 
+mas significativas para seleccionar la clase 
+positiva y la segunda nube contienen 
+los q-gramas más significativos. Estos tokens fueron 
+seleccionados de acuerdo al coeficiente calculado por 
+la máquina de soporte vectorial 
 entrenada en el conjunto de datos creado.
 
-Suponiendo que el texto se encuentra en la llave *text* el siguiente código entrena 
-una máquina de soporte vectorial lineal usando una bolsa de palabras previamente 
-calculada.
+![Palabras asociadas](/Delitos/assets/images/pos_words.png)
+![q-grams asociados](/Delitos/assets/images/pos_qgrams.png)
+
+Las figuras anteriores se crearon siguiendo este procedimiento que empieza
+suponiendo que el texto se encuentra en la llave *text*, 
+entonces el siguiente código entrena una máquina de soporte vectorial 
+lineal usando una bolsa de palabras previamente calculada.
 
 ```python
-from EvoMSA.evodag import BoW
+from EvoMSA import BoW
 from microtc.utils import tweet_iterator
 
 D = list(tweet_iterator('delitos_train.json'))
@@ -39,7 +47,7 @@ tokens = {bow.bow.id2token[id]: _w * w[id] for id, _w in bow.bow.token_weight.it
 ```
 
 La variable `tokens` tiene el peso de cada token para la clasificación, en el siguiente
-codigo se seleccionan solo las palabras y se genera la bolsa de palabras.
+código se seleccionan solo las palabras y se genera la bolsa de palabras.
 
 ```python
 from matplotlib import pylab as plt
@@ -50,10 +58,6 @@ word_cloud = WordCloud().generate_from_frequencies(words)
 plt.imshow(word_cloud, interpolation='bilinear')
 ```
 
-La siguiente figura muestra el resultado del proceso anterior. 
-
-![Palabras asociadas](/Delitos/assets/images/pos_words.png)
-
 Complementando el procedimiento anterior, el siguiente código muestra
 los q-gramas más significativos.
 
@@ -62,11 +66,6 @@ words = {k[2:]: v for k, v in tokens.items() if k[:2] != 'q:'}
 word_cloud = WordCloud().generate_from_frequencies(words)
 plt.imshow(word_cloud, interpolation='bilinear')
 ```
-
-La siguiente figura muestra la nube de palabras generada con los
-q-gramas más significativos. 
-
-![q-grams asociados](/Delitos/assets/images/pos_qgrams.png)
 
 Para el caso donde no se cuenten con los textos, el modelo 
 obtenido por la máquina de soporte vectorial lineal, se puede 
@@ -90,14 +89,14 @@ se puede utilizar para usar el modelo y predecir los datos
 del conjunto de prueba. 
 
 ```python
-from EvoMSA.evodag import BoW
+from EvoMSA import BoW
 from EvoMSA.utils import load_dataset
 
 bow = BoW(lang='es')
 bow.estimator_instance = load_dataset(lang='es', name='delitos_ingeotec')[0]
 ```
 
-Suponiendo que el conjunto de prueba tiene el campo `text` que contiene
+Suponiendo que el conjunto de prueba tiene el campo *text* que contiene
 el texto del tuit entonces se puede predecir la clase de la siguiente manera.
 
 ```python
