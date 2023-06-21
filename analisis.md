@@ -73,7 +73,8 @@ obtener con el siguiente código.
 
 ```python
 from EvoMSA.utils import load_dataset
-m = load_dataset(lang='es', name='delitos_ingeotec')[0]
+m = load_dataset(lang='es', name='datasets')
+m = [i for i in m if i.labels[-1] == 'delitos_ingeotec'][0]
 ```
 
 # Rendimiento
