@@ -62,7 +62,7 @@ Complementando el procedimiento anterior, el siguiente código muestra
 los q-gramas más significativos.
 
 ```python 
-words = {k[2:]: v for k, v in tokens.items() if k[:2] != 'q:'}
+words = {k[2:]: v for k, v in tokens.items() if k[:2] == 'q:'}
 word_cloud = WordCloud().generate_from_frequencies(words)
 plt.imshow(word_cloud, interpolation='bilinear')
 ```
