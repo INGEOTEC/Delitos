@@ -18,7 +18,7 @@ El corpus está dividido en un conjunto de entrenamiento [delitos_train.json](ht
 prueba [delitos_test.json](https://github.com/INGEOTEC/Delitos/blob/main/corpus/delitos_train.json).
 
 El formato de estos dos archivos es un json por linea, el json tiene tres llaves;
-*annotations* que continen la lista de etiquetas asignadas por tres personas, 
+*annotations* que contienen la lista de etiquetas asignadas por tres personas, 
 *id* es el identificador del tuit y *label* que es la clase asignada. El siguiente
 código muestra un tuit etiquetado.
 
