@@ -94,7 +94,9 @@ from EvoMSA import BoW
 from EvoMSA.utils import load_dataset
 
 bow = BoW(lang='es')
-bow.estimator_instance = load_dataset(lang='es', name='delitos_ingeotec')[0]
+m = load_dataset(lang='es', name='datasets')
+m = [i for i in m if i.labels[-1] == 'delitos_ingeotec'][0]
+bow.estimator_instance = m
 ```
 
 Suponiendo que el conjunto de prueba tiene el campo *text* que contiene
